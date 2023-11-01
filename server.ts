@@ -10,15 +10,15 @@ const app: express.Application = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-type corses = {
-  origin: String;
-  optionsSuccessStatus: Number;
-};
-const corsOptions = {
-  origin: "http://localhost:3000",
-  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-};
-app.use(cors(corsOptions));
+// type corses = {
+//   origin: String;
+//   optionsSuccessStatus: Number;
+// };
+// const corsOptions = {
+//   origin: "http://localhost:3000",
+//   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+// };
+app.use(cors());
 
 const server: String = "0.0.0.0:7070";
 app.listen(7070, () => {
