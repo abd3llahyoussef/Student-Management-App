@@ -1,6 +1,7 @@
 "use client";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import Modify from "./modify";
 
 interface data {
   _id?: string;
@@ -17,6 +18,8 @@ export default function Home() {
     name: "",
     age: 0,
   });
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     (async () => {
       try {
@@ -49,13 +52,17 @@ export default function Home() {
       alert("there is an error while inserting an student");
     }
   };
-  const handleUpdate = async (id: data["_id"]) => {
-    try {
-      await axios.put("http://localhost:7070/editStudent", { id, updatedData });
-    } catch (err) {
-      alert("Error in removing a student");
-    }
+  const updateStudent = () => {
+    setIsLoading(!isLoading);
   };
+
+  // const handleUpdate = async (id: data["_id"]) => {
+  //   try {
+  //     await axios.put("http://localhost:7070/editStudent", { id, updatedData });
+  //   } catch (err) {
+  //     alert("Error in removing a student");
+  //   }
+  // };
   const handleDelete = async (id: data["_id"]) => {
     console.log(id);
     try {
@@ -103,38 +110,45 @@ export default function Home() {
 
           {data.map((item, key) => (
             <li className="list-group-item grid grid-cols-2" key={item._id}>
-              <p> {item.name}</p>
-              <div className="flex justify-end">
-                <button onClick={() => handleUpdate(item._id)}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    className="bi bi-arrow-clockwise"
-                    viewBox="0 0 16 16"
+              <p>{item.name}</p>
+              {!isLoading ? (
+                <div className="flex justify-end">
+                  <button onClick={updateStudent}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      className="bi bi-arrow-clockwise"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"
+                      />
+                      <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
+                    </svg>
+                  </button>
+                  <button
+                    onClick={() => handleDelete(item._id)}
+                    className="ml-2"
                   >
-                    <path
-                      fill-rule="evenodd"
-                      d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"
-                    />
-                    <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
-                  </svg>
-                </button>
-                <button onClick={() => handleDelete(item._id)} className="ml-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    className="bi bi-trash"
-                    viewBox="0 0 16 16"
-                  >
-                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
-                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
-                  </svg>
-                </button>
-              </div>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      className="bi bi-trash"
+                      viewBox="0 0 16 16"
+                    >
+                      <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
+                      <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
+                    </svg>
+                  </button>
+                </div>
+              ) : (
+                <Modify id={item._id} />
+              )}
             </li>
           ))}
         </ul>

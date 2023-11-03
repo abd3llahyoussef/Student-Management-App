@@ -29,9 +29,10 @@ const getStudents = async (req: Request, res: Response) => {
 };
 
 const updateStudent = async (req: Request, res: Response) => {
-  const id = req.body.id;
+  const id = req.body._id;
   const studentName = req.body.updatedData.name;
   const studentAge = req.body.updatedData.age;
+
   try {
     const update = await std.updateStudent(id, studentName, studentAge);
   } catch (e) {
