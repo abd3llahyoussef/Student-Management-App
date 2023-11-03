@@ -30,8 +30,8 @@ const getStudents = async (req: Request, res: Response) => {
 
 const updateStudent = async (req: Request, res: Response) => {
   const id = req.body.id;
-  const studentName = req.body.name;
-  const studentAge = req.body.age;
+  const studentName = req.body.updatedData.name;
+  const studentAge = req.body.updatedData.age;
   try {
     const update = await std.updateStudent(id, studentName, studentAge);
   } catch (e) {
@@ -41,9 +41,10 @@ const updateStudent = async (req: Request, res: Response) => {
 };
 
 const deleteStudent = async (req: Request, res: Response) => {
-  const id = req.body.id;
+  const _id = req.body.id;
+  console.log(_id);
   try {
-    const deleted = await std.deleteStudent(id);
+    const deleted = await std.deleteStudent(_id);
     res.status(200).json({ message: "successfully deleted" });
   } catch (err) {
     console.log(err);
